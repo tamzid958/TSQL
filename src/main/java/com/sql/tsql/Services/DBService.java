@@ -6,23 +6,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class DBService {
-    @Value("${server-path}")
-    private String serverPath;
+    @Value("${db-path}")
+    private String dbPath;
 
-    public void create(String name) {
-        Path path = Paths.get(serverPath, name);
-        var file = new File(String.valueOf(path));
-        if (file.mkdirs()) {
-            log.info("DB Created");
-        } else {
-            log.error("DB already exists");
+    public Boolean init() {
+        var server = new File(dbPath);
+
+        if (!server.exists() && !server.isDirectory() && !server.mkdirs()) {
+            log.error("Server initialization failed.");
+            return false;
         }
+        return true;
     }
 }

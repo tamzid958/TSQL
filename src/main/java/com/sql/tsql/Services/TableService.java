@@ -15,8 +15,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class TableService {
-    @Value("${server-path}")
-    private String serverPath;
+    @Value("${db-path}")
+    private String dbPath;
 
     public void create(String name) throws IOException {
         File file = getTable(name);
@@ -28,7 +28,7 @@ public class TableService {
     }
 
     private File getTable(String name) {
-        return new File(serverPath + name + ".table");
+        return new File(dbPath + name + ".table");
     }
 
     public void addColumns(String name, List<String> columns) throws IOException {

@@ -2,7 +2,6 @@ package com.sql.tsql.Services;
 
 import com.sql.tsql.Helpers.AvailableOperations;
 import com.sql.tsql.Helpers.CommandLineTable;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +11,8 @@ import java.util.Scanner;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
-public class BootService {
+public record BootService(DBService serverService, Parser parser) {
     private static final Scanner input = new Scanner(System.in);
-    private final ServerService serverService;
-    private final Parser parser;
 
     public void start() throws IOException {
         if (serverService.init()) {
@@ -28,7 +24,7 @@ public class BootService {
 
             while (true) {
                 System.out.print("TSQL > ");
-                var command = input.nextLine();
+                var command = input.nextLine().trim();
                 parser.start(command);
             }
         }

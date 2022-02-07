@@ -20,8 +20,8 @@ public class Parser {
     private final ParserHelper parserHelper;
     private final TableService tableService;
     private final TableHelper tableHelper;
-    @Value("${server-path}")
-    private String serverPath;
+    @Value("${db-path}")
+    private String dbPath;
 
     public void start(String command) throws IOException {
         var parsedCommand = Arrays.stream(command.split("\\s+")).toList();
@@ -56,7 +56,7 @@ public class Parser {
                     CommandLineTable commandLineTable = new CommandLineTable();
                     commandLineTable.setShowVerticalLines(true);
                     commandLineTable.setHeaders("tables", "object count");
-                    tableHelper.listTables(serverPath).forEach(commandLineTable::addRow);
+                    tableHelper.listTables(dbPath).forEach(commandLineTable::addRow);
                     commandLineTable.print();
                 }
                 break;

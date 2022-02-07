@@ -1,15 +1,17 @@
-package Services;
+package com.sql.tsql.Services;
 
-import Helpers.ParserHelper;
-import Models.Table;
+import com.sql.tsql.Helpers.ParserHelper;
+import com.sql.tsql.Models.Table;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
+@Service
 @RequiredArgsConstructor
+@Slf4j
 public class Parser {
     private final ParserHelper parserHelper;
 

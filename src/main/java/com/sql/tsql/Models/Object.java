@@ -1,4 +1,4 @@
-package Models;
+package com.sql.tsql.Models;
 
 import java.util.List;
 

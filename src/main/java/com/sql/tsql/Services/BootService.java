@@ -1,7 +1,9 @@
-package Services;
+package com.sql.tsql.Services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,13 +11,14 @@ import java.util.Scanner;
 import static java.lang.System.out;
 
 
+@Service
 @Slf4j
 @RequiredArgsConstructor
 public class BootService {
-    public static List<String> availableOperations = List.of("CREATE TABLE");
+    public static List<String> availableOperations = List.of("CREATE DATABASE", "CREATE TABLE");
     private final ServerService serverService;
     private final Parser parser;
-    Scanner input = new Scanner(System.in);
+    private final Scanner input = new Scanner(System.in);
 
     public void start() {
         if (serverService.init()) {

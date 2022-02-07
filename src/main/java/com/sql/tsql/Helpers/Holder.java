@@ -1,4 +1,4 @@
-package Helpers;
+package com.sql.tsql.Helpers;
 
 import java.util.List;
 

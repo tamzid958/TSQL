@@ -7,5 +7,7 @@ public final class AvailableOperations {
         put("CREATE TABLE", "CREATE TABLE table_name { id , name }");
         put("DELETE TABLE", "DELETE TABLE table_name");
         put("UPDATE TABLE", "UPDATE TABLE table_name new_table_name");
+        put("INSERT DATA", "INSERT TABLE { id , name } VALUES { 1 , 2 }");
+        put("SHOW TABLES", "SHOW TABLES");
     }};
 }

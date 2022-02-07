@@ -11,6 +11,12 @@ public record ParserHelper() {
                 .skip(parsedCommand.indexOf(Holder.START))
                 .limit(parsedCommand.indexOf(Holder.END))
                 .filter(column -> !Holder.SKIP.contains(column))
+                .filter(column -> {
+                    if (column.contains(",")) {
+                        throw new RuntimeException("corrupted command");
+                    }
+                    return true;
+                })
                 .toList();
     }
 }

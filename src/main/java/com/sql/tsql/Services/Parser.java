@@ -1,8 +1,12 @@
 package com.sql.tsql.Services;
 
+import com.sql.tsql.Helpers.CommandLineTable;
 import com.sql.tsql.Helpers.ParserHelper;
+import com.sql.tsql.Helpers.TableHelper;
 import com.sql.tsql.Models.Table;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -11,22 +15,24 @@ import java.util.List;
 
 @Service
 @Slf4j
-public record Parser(ParserHelper parserHelper, TableService tableService) {
+@RequiredArgsConstructor
+public class Parser {
+    private final ParserHelper parserHelper;
+    private final TableService tableService;
+    private final TableHelper tableHelper;
+    @Value("${server-path}")
+    private String serverPath;
+
     public void start(String command) throws IOException {
         var parsedCommand = Arrays.stream(command.split("\\s+")).toList();
 
-        if (parsedCommand.size() <= 3) {
-            log.error("inappropriate command");
-            return;
-        }
-
         var operation = parsedCommand.get(0).toUpperCase();
         var context = parsedCommand.get(1).toUpperCase();
+        var tableName = parsedCommand.size() >= 3 ? parsedCommand.get(2) : null;
 
         switch (operation) {
             case "CREATE":
                 if ("TABLE".equals(context)) {
-                    var tableName = parsedCommand.get(2);
                     List<String> columns = parserHelper.parseWrappedObject(parsedCommand);
                     var table = new Table(tableName, columns);
                     tableService.create(table.name());
@@ -35,16 +41,23 @@ public record Parser(ParserHelper parserHelper, TableService tableService) {
                 break;
             case "DELETE":
                 if ("TABLE".equals(context)) {
-                    var tableName = parsedCommand.get(2);
                     var table = new Table(tableName, null);
                     tableService.delete(table.name());
                 }
                 break;
             case "UPDATE":
                 if ("TABLE".equals(context)) {
-                    var tableName = parsedCommand.get(2);
                     var updatedTableName = parsedCommand.get(3);
                     tableService.update(tableName, updatedTableName);
+                }
+                break;
+            case "SHOW":
+                if ("TABLES".equals(context)) {
+                    CommandLineTable commandLineTable = new CommandLineTable();
+                    commandLineTable.setShowVerticalLines(true);
+                    commandLineTable.setHeaders("tables", "object count");
+                    tableHelper.listTables(serverPath).forEach(commandLineTable::addRow);
+                    commandLineTable.print();
                 }
                 break;
             default:

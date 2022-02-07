@@ -21,7 +21,7 @@ public class TableService {
     public void create(String name) throws IOException {
         File file = getTable(name);
         if (file.createNewFile()) {
-            log.info("Table Created");
+            log.info("Table created");
         } else {
             log.error("Table already exists");
         }
@@ -40,9 +40,20 @@ public class TableService {
     public void delete(String name) {
         File file = getTable(name);
         if (file.delete()) {
-            log.info("Table Deleted");
+            log.info("Table deleted");
         } else {
             log.error("Error deleting " + name);
         }
+    }
+
+    public void update(String name, String updatedName) {
+        File file = getTable(name);
+        File updatedFile = getTable(updatedName);
+        if (file.renameTo(updatedFile)) {
+            log.info("Table updated");
+        } else {
+            log.error("Error updating " + name);
+        }
+
     }
 }

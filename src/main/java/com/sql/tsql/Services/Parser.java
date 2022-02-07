@@ -15,7 +15,7 @@ public record Parser(ParserHelper parserHelper, TableService tableService) {
     public void start(String command) throws IOException {
         var parsedCommand = Arrays.stream(command.split("\\s+")).toList();
 
-        if (parsedCommand.size() <= 1) {
+        if (parsedCommand.size() <= 3) {
             log.error("inappropriate command");
             return;
         }
@@ -38,6 +38,13 @@ public record Parser(ParserHelper parserHelper, TableService tableService) {
                     var tableName = parsedCommand.get(2);
                     var table = new Table(tableName, null);
                     tableService.delete(table.name());
+                }
+                break;
+            case "UPDATE":
+                if ("TABLE".equals(context)) {
+                    var tableName = parsedCommand.get(2);
+                    var updatedTableName = parsedCommand.get(3);
+                    tableService.update(tableName, updatedTableName);
                 }
                 break;
             default:

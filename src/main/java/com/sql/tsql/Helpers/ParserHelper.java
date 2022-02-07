@@ -1,13 +1,11 @@
 package com.sql.tsql.Helpers;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-public class ParserHelper {
+public record ParserHelper() {
     public List<String> parseWrappedObject(List<String> parsedCommand) {
         return parsedCommand.stream()
                 .skip(parsedCommand.indexOf(Holder.START))

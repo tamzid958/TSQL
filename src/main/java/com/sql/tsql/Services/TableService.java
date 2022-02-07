@@ -2,27 +2,47 @@ package com.sql.tsql.Services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class TableService {
-    private final ServerService serverService;
+    @Value("${server-path}")
+    private String serverPath;
 
-    public Boolean create(String name) throws IOException {
-        Path path = Paths.get(serverService.getServerPath(), name);
-        var file = new File(path + ".table");
-        if (!file.createNewFile()) {
-            log.error("Table already exists");
-            return false;
+    public void create(String name) throws IOException {
+        File file = getTable(name);
+        if (file.createNewFile()) {
+            log.info("Table Created");
         } else {
-            return true;
+            log.error("Table already exists");
+        }
+    }
+
+    private File getTable(String name) {
+        return new File(serverPath + name + ".table");
+    }
+
+    public void addColumns(String name, List<String> columns) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(getTable(name), true));
+        writer.append(String.join(",", columns));
+        writer.close();
+    }
+
+    public void delete(String name) {
+        File file = getTable(name);
+        if (file.delete()) {
+            log.info("Table Deleted");
+        } else {
+            log.error("Error deleting " + name);
         }
     }
 }

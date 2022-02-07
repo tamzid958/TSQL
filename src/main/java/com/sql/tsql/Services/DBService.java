@@ -2,27 +2,27 @@ package com.sql.tsql.Services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class DBService {
-    private final ServerService serverService;
+    @Value("${server-path}")
+    private String serverPath;
 
-    public Boolean create(String name) throws IOException {
-        Path path = Paths.get(serverService.getServerPath(), name);
+    public void create(String name) {
+        Path path = Paths.get(serverPath, name);
         var file = new File(String.valueOf(path));
-        if (!file.mkdirs()) {
-            log.error("Table already exists");
-            return false;
+        if (file.mkdirs()) {
+            log.info("DB Created");
         } else {
-            return file.createNewFile();
+            log.error("DB already exists");
         }
     }
 }

@@ -2,18 +2,16 @@ package com.sql.tsql.Helpers;
 
 
 import com.sql.tsql.Services.BootService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
-public class AppStartupRunner {
-    private final BootService bootService;
+import java.io.IOException;
 
+@Component
+public record AppStartupRunner(BootService bootService) {
     @EventListener(ApplicationReadyEvent.class)
-    public void init() {
+    public void init() throws IOException {
         bootService.start();
     }
 }

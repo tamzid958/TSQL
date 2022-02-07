@@ -2,7 +2,7 @@ package com.sql.tsql.Services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -11,9 +11,9 @@ import java.io.File;
 @Slf4j
 @RequiredArgsConstructor
 public class ServerService {
-    private static final String serverPath = "server/";
+    @Value("${server-path}")
+    private String serverPath;
 
-    @Bean
     public Boolean init() {
         var server = new File(serverPath);
 
@@ -22,10 +22,5 @@ public class ServerService {
             return false;
         }
         return true;
-    }
-
-    @Bean
-    public String getServerPath() {
-        return serverPath;
     }
 }

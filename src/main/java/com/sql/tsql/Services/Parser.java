@@ -60,6 +60,9 @@ public class Parser {
                     termTable.print();
                 }
                 break;
+            case "INSERT":
+                var entity = parserHelper.createEntity(parsedCommand);
+                break;
             default:
                 log.error("unexpected token " + operation + " in command: " + command);
         }

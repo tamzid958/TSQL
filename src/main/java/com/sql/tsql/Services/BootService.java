@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Scanner;
 
 
@@ -21,9 +22,11 @@ public record BootService(DBService dbService, Parser parser) {
             termTable.setHeaders("available commands", "example");
             AvailableOperations.withExample.forEach(termTable::addRow);
             termTable.print();
+            var machineIp = InetAddress.getLocalHost().getHostAddress();
 
             while (true) {
-                System.out.print("TSQL > ");
+
+                System.out.print(machineIp + "@TSQL > ");
                 var command = input.nextLine().trim();
                 parser.start(command);
             }

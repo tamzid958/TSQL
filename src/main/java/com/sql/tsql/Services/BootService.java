@@ -2,7 +2,6 @@ package com.sql.tsql.Services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +27,6 @@ public class BootService {
             });
 
             var command = input.nextLine();
-
 
             out.println(parser.start(command));
         }

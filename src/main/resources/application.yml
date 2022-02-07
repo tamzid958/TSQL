@@ -4,3 +4,4 @@ spring:
     log-startup-info: false
 
 db-path: server/
+table-extension: .table

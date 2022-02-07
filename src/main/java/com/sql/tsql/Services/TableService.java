@@ -17,6 +17,8 @@ import java.util.List;
 public class TableService {
     @Value("${db-path}")
     private String dbPath;
+    @Value("${table-extension}")
+    private String tableExtension;
 
     public void create(String name) throws IOException {
         File file = getTable(name);
@@ -28,7 +30,7 @@ public class TableService {
     }
 
     private File getTable(String name) {
-        return new File(dbPath + name + ".table");
+        return new File(dbPath + name + tableExtension);
     }
 
     public void addColumns(String name, List<String> columns) throws IOException {

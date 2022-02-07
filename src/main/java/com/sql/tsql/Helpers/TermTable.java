@@ -2,7 +2,7 @@ package com.sql.tsql.Helpers;
 
 import java.util.*;
 
-public class CommandLineTable {
+public class TermTable {
     private static final String HORIZONTAL_SEP = "-";
     private final List<String[]> rows = new ArrayList<>();
     private String verticalSep;
@@ -10,7 +10,7 @@ public class CommandLineTable {
     private String[] headers;
     private boolean rightAlign;
 
-    public CommandLineTable() {
+    public TermTable() {
         setShowVerticalLines(false);
     }
 

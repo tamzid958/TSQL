@@ -1,8 +1,8 @@
 package com.sql.tsql.Services;
 
-import com.sql.tsql.Helpers.CommandLineTable;
 import com.sql.tsql.Helpers.ParserHelper;
 import com.sql.tsql.Helpers.TableHelper;
+import com.sql.tsql.Helpers.TermTable;
 import com.sql.tsql.Models.Table;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,11 +53,11 @@ public class Parser {
                 break;
             case "SHOW":
                 if ("TABLES".equals(context)) {
-                    CommandLineTable commandLineTable = new CommandLineTable();
-                    commandLineTable.setShowVerticalLines(true);
-                    commandLineTable.setHeaders("tables", "object count");
-                    tableHelper.listTables(dbPath).forEach(commandLineTable::addRow);
-                    commandLineTable.print();
+                    TermTable termTable = new TermTable();
+                    termTable.setShowVerticalLines(true);
+                    termTable.setHeaders("table", "count");
+                    tableHelper.listTables(dbPath).forEach(termTable::addRow);
+                    termTable.print();
                 }
                 break;
             default:

@@ -1,7 +1,6 @@
 package com.sql.tsql.Services;
 
 import com.sql.tsql.Helpers.AvailableOperations;
-import com.sql.tsql.Helpers.CommandLineTable;
 import com.sql.tsql.Helpers.TableHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +30,7 @@ public class BootService {
             AvailableOperations.withExample.forEach((op, example) -> {
                 out.println(op + " - " + example);
             });
-
-            CommandLineTable cmdTable = new CommandLineTable();
-            cmdTable.setShowVerticalLines(true);
-            cmdTable.setHeaders("Table");
-            cmdTable.addRow(tableHelper.listTables(serverPath));
-            cmdTable.print();
-
+            
             while (true) {
                 var command = input.nextLine();
                 parser.start(command);
